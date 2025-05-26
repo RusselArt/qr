@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>智慧跳轉中...</title>
+</head>
+<body>
+<div id="message">正在驗證會員身份，請稍候...</div>
+
+<script>
+  const rawId = new URLSearchParams(window.location.search).get("id");
+  const id = rawId ? rawId.toUpperCase() : null;
+
+  const formBase = "https://docs.google.com/forms/d/e/1FAIpQLSfHd91m7nvi4ti29BkyW32PVY_tvOW6apdlD0HbBEJ_8RAiyw/viewform?usp=pp_url&entry.187012352=";
+  const loginPage = "https://www.russelart.com/ecommerce/customer/account/login/";
+  const validIdPattern = /^(RA-\d{4}|BOD-\d{1,2}|EMP-\d{2}|SUP-A[1-9]|SUP-B[1-9])$/;
+
+  const messageDiv = document.getElementById("message");
+
+  if (id && validIdPattern.test(id)) {
+    // 成功 → 嘗試跳轉 Google 表單
+    window.location.href = formBase + encodeURIComponent(id);
+
+    // 若 3 秒內無法進入表單，轉導至登入頁
+    setTimeout(() => {
+      window.location.href = loginPage;
+    }, 3000);
+  } else {
+    // 失敗處理
+    messageDiv.innerHTML = `
+      <p style="color:red;">查無效的會員編號：<strong>${rawId || "（未提供）"}</strong></p>
+      <p>請確認 QR Code 是否正確，或 <a href="${loginPage}" target="_blank">前往登入頁</a></p>
+    `;
+  }
+</script>
+
+</body>
+</html>
