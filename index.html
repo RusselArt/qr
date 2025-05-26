@@ -30,9 +30,6 @@
       border-radius: 6px;
       width: 80%;
     }
-    .btn.secondary {
-      background-color: #777;
-    }
     .error {
       color: red;
     }
@@ -48,8 +45,7 @@
   const rawId = new URLSearchParams(window.location.search).get("id");
   const id = rawId ? rawId.toUpperCase() : null;
 
-  const loginPage = "https://www.russelart.com/ecommerce/customer/account/login/";
-
+  // ↓↓↓ 請保留這段，由我自動產出的會員對應資料 ↓↓↓
   const memberData = {
     "EMP-18": {
       folder: "https://drive.google.com/drive/folders/10N4jFZQF9uIujg3xxmEL1eC0LdZkh04Q",
@@ -75,8 +71,9 @@
       folder: "https://drive.google.com/drive/folders/1TV0VHqqIq6psXHzKo5qjWkOhN72GUn1s",
       form: "https://docs.google.com/forms/d/e/1FAIpQLSfHd91m7nvi4ti29BkyW32PVY_tvOW6apdlD0HbBEJ_8RAiyw/viewform?usp=pp_url&entry.187012352=EMP-19"
     }
-    // 更多會員可在此追加
+    // 可再加更多會員資料
   };
+  // ↑↑↑ 自動生成結束 ↑↑↑
 
   const container = document.getElementById("container");
 
@@ -86,13 +83,11 @@
       <p>會員編號：<strong>${id}</strong></p>
       <a class="btn" href="${memberData[id].folder}" target="_blank">📁 查看我的會員個人資料夾</a>
       <a class="btn" href="${memberData[id].form}" target="_blank">📋 長鼻工作人員專用查詢後台</a>
-      <a class="btn secondary" href="${loginPage}" target="_blank">🔐 前往登入頁</a>
     `;
   } else {
     container.innerHTML = `
       <h1 class="error">查無此會員資料</h1>
-      <p>請確認 QR Code 是否正確，或前往登入頁</p>
-      <a class="btn secondary" href="${loginPage}" target="_blank">🔐 前往登入頁</a>
+      <p>請確認 QR Code 是否正確</p>
     `;
   }
 </script>
